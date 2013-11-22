@@ -1,0 +1,75 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>정인영 - ToDo </title>
+		<script>
+		var todosqlite={};
+		todosqlite.webdb={};
+		todosqlite.webdb,db=null;
+
+		//시작
+		function init(){
+			todosqlite.webdb.open();
+		}
+		//데이터 베이스 연결
+		todosqlite.webdb.open=function(){
+			var bdSize =5*1024*1024; //5MB
+		todosqlite.webdb.db=openDatabase("todo","1.0","Todo manager",dbsize);
+		}
+
+		// 테이블 생성
+		todosqlite.wedbd.createTable=function(){
+		var db=todosqlite.wedbd.db;
+		db.transaction()function (tx){
+			tx.executesql("CERATE TABLE IF NOT EXISTS todo (ID INTEGR PRIMERY KEY ASC, todo TEXT, added_on DATETIME"),[]);
+			});
+		}
+		
+
+		//저장
+		fundtion addtodo() {
+			ver todo = document.getElementById("todo");
+			todosqlite.webdb.addTodo(todo.value);
+			todo.value="";
+		} 
+
+		//저장
+		todosqlite.wedbd.addTodo=fundtion(todoText){
+		var db=todosqlite.webdb.db;
+		db.transaction(function(tx){
+			var.executeSql("INSERT INTO todo(todo, added_on ) VALUE(?<?)" [todo Text, addedOn], todosqlite.wedbd.omSuccess,todosqlite.wedbd.onError);
+			});
+		}
+		//성공
+		todosqlite.wedbd.omSuccess=function(tx,r){
+			todosqlite.wedbd.getALLTodoItimes(loadTodoItime);
+}
+		//실패
+		todosqlite.wedbd.OnErorr=function(tx,e){
+		ALERT("오류: "e.message);
+		}
+		// 테이블에서 목록 불러오기
+		function loadTodoItime(tx,rs){
+
+		var rowOutput ="";
+		var todoItimes=document.getElememtById("tidiItime");
+
+		for(var i=0; i<re,rows.length; i++){
+		rowOutItime,innerHTML=rowOutput;
+		}
+
+		//테이블 내용을 HTML로 출력
+		function renderTodo(row){
+			return "<li>"+row.todo+"{<ahref='javascript:void(0);'  onclick='todosqlite.wedbd.deleteTodo("+row.ID+");'>삭제</a>]</li>";
+		}
+
+		</script>
+	</head>
+	<body onload="init();">
+	<ul id="todoItime"></ul>
+	<form type="post" onsubmit ="addTodo(); return false;">
+	<input type="text" id="todo" name="todo" placeholder="내용을 입력해 주세요." style="widyh:200px;"/>
+	<input type="submit" value="추가"/>
+	</form>
+	</body>
+</html>
